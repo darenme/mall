@@ -1,4 +1,4 @@
-package com.mmall.pojo;
+package com.darenme.mmall.pojo;
 
 import java.util.Date;
 

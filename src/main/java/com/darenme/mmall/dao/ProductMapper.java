@@ -1,6 +1,6 @@
-package com.mmall.dao;
+package com.darenme.mmall.dao;
 
-import com.mmall.pojo.Product;
+import com.darenme.mmall.pojo.Product;
 
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer id);

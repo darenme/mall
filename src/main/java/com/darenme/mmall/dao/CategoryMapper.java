@@ -1,6 +1,6 @@
-package com.mmall.dao;
+package com.darenme.mmall.dao;
 
-import com.mmall.pojo.Category;
+import com.darenme.mmall.pojo.Category;
 
 public interface CategoryMapper {
     int deleteByPrimaryKey(Integer id);
