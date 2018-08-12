@@ -35,7 +35,7 @@ public class CategoryManagerController {
     public ServerResponse addCategory(HttpSession session, String categoryName, @RequestParam(value = "parentId", defaultValue = "0") int parentId) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if(user == null) {
-            return ServerResponse.createByCodeErrorMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，请登录");
+            return ServerResponse.createByCodeErrorMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，请登录管理员");
 
         }
 
@@ -54,7 +54,7 @@ public class CategoryManagerController {
     public ServerResponse setCategoryName(HttpSession session, Integer categoryId, String categoryName) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if(user == null) {
-            return ServerResponse.createByCodeErrorMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，请登录");
+            return ServerResponse.createByCodeErrorMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，请登录管理员");
         }
         // 校验是否是管理员
         if (iUserService.checkAdmin(user).isSuccess()) {
@@ -70,7 +70,7 @@ public class CategoryManagerController {
     public ServerResponse getChildrenParallelCategory(HttpSession session, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if(user == null) {
-            return ServerResponse.createByCodeErrorMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，请登录");
+            return ServerResponse.createByCodeErrorMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，请登录管理员");
         }
 
         // 校验是否是管理员
@@ -88,7 +88,7 @@ public class CategoryManagerController {
     public ServerResponse getCategoryAndDeepChildrenCatogory(HttpSession session, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if(user == null) {
-            return ServerResponse.createByCodeErrorMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，请登录");
+            return ServerResponse.createByCodeErrorMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，请登录管理员");
         }
 
         // 校验是否是管理员
