@@ -296,6 +296,9 @@
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
+          <!-- 把本地jar包发送到tomcat服务器上必要的一个配置
+               idea的projects的module下的依赖中添加的jars是
+               为了保证idea的代码提示成功 -->
             <configuration>
                 <source>1.8</source>
                 <target>1.8</target>
