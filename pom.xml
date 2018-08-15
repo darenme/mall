@@ -6,7 +6,7 @@
 
   <groupId>com.darenme</groupId>
   <artifactId>mmall</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>2.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>mmall Maven Webapp</name>
@@ -27,6 +27,13 @@
 
 
   <dependencies>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.2</version>
+      <scope>provided</scope>
+    </dependency>
 
     <dependency>
       <groupId>org.apache.tomcat</groupId>
@@ -326,5 +333,41 @@
           <version>2.8.2</version>
         </plugin>
       </plugins>
+
+      <resources>
+          <resource>
+              <directory>src/main/resources.${deploy.type}</directory>
+              <excludes>
+                  <exclude>*.jsp</exclude>
+              </excludes>
+          </resource>
+          <resource>
+              <directory>src/main/resources</directory>
+          </resource>
+      </resources>
   </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <deploy.type>dev</deploy.type>
+            </properties>
+        </profile>
+        <profile>
+            <id>beta</id>
+            <properties>
+                <deploy.type>beta</deploy.type>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <deploy.type>prod</deploy.type>
+            </properties>
+        </profile>
+    </profiles>
 </project>

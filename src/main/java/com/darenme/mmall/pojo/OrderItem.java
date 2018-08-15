@@ -1,8 +1,17 @@
 package com.darenme.mmall.pojo;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderItem {
     private Integer id;
 
@@ -25,24 +34,6 @@ public class OrderItem {
     private Date createTime;
 
     private Date updateTime;
-
-    public OrderItem(Integer id, Integer userId, Long orderNo, Integer productId, String productName, String productImage, BigDecimal currentUnitPrice, Integer quantity, BigDecimal totalPrice, Date createTime, Date updateTime) {
-        this.id = id;
-        this.userId = userId;
-        this.orderNo = orderNo;
-        this.productId = productId;
-        this.productName = productName;
-        this.productImage = productImage;
-        this.currentUnitPrice = currentUnitPrice;
-        this.quantity = quantity;
-        this.totalPrice = totalPrice;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-    }
-
-    public OrderItem() {
-        super();
-    }
 
     public Integer getId() {
         return id;
