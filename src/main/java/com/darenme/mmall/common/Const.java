@@ -16,6 +16,8 @@ public class Const {
     public static final String EMAIL = "email";
     public static final String USERNAME = "username";
 
+    public static final String TOKEN_PREFIX = "token_";
+
     /// 接口
 
     // 为什么不用枚举？
