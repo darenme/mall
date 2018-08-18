@@ -48,10 +48,12 @@ public class UserSpringSessionController {
 
     @RequestMapping(value = "logout.do", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse<User> logout(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
-        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
-        CookieUtil.delLoginToken(httpServletRequest,httpServletResponse);
-        RedisShardedPoolUtil.del(loginToken);
+    public ServerResponse<User> logout(HttpSession session,HttpServletResponse httpServletResponse) {
+//        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
+//        CookieUtil.delLoginToken(httpServletRequest,httpServletResponse);
+//        RedisShardedPoolUtil.del(loginToken);
+
+        session.removeAttribute(Const.CURRENT_USER);
         return ServerResponse.createBySuccess();
     }
 
