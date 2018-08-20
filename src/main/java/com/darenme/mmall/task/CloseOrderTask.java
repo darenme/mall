@@ -46,7 +46,7 @@ public class CloseOrderTask {
     /**
      * 可能出现死锁，虽然在执行close的时候有防死锁，但是还是会出现，继续演进V3
      */
-    @Scheduled(cron="0 */1 * * * ?")//每1分钟(每个1分钟的整数倍)
+//    @Scheduled(cron="0 */1 * * * ?")//每1分钟(每个1分钟的整数倍)
     public void closeOrderTaskV2() throws InterruptedException {
         long lockTimeout = Long.parseLong(PropertiesUtil.getProperty("lock.timeout","50000"));//锁5秒有效期
         //这个时间如何用呢，看下面。和时间戳结合起来用。
