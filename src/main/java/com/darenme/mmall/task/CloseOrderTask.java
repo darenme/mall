@@ -60,7 +60,7 @@ public class CloseOrderTask {
     }
 
     // 把流程图写出来
-//    @Scheduled(cron="0 */1 * * * ?")
+    @Scheduled(cron="0 */1 * * * ?")
     public void closeOrderTaskV3() throws InterruptedException {
         long lockTimeout = Long.parseLong(PropertiesUtil.getProperty("lock.timeout","5000"));//锁5秒有效期
         Long setnxResult = RedisShardedPoolUtil.setnx(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK, String.valueOf(System.currentTimeMillis()+lockTimeout));
@@ -95,36 +95,36 @@ public class CloseOrderTask {
      * Redisson分布式锁实现
      * @throws InterruptedException
      */
-    @Scheduled(cron="0 */1 * * * ?")//每1分钟(每个1分钟的整数倍)
-    public void closeOrderTaskV4() throws InterruptedException {
-        RLock lock = redissonManager.getRedisson().getLock(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
-        boolean getLock = false;
-        try {
-            if(getLock = lock.tryLock(0 ,50, TimeUnit.SECONDS)){//trylock增加锁
-                log.info("===获取{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
-                int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour","2"));
-//                iOrderService.closeOrder(hour);
-            }else{
-                log.info("===没有获得分布式锁:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
-            }
-        } catch (InterruptedException e) {
-            log.error("Redisson分布式锁获取异常", e);
-        }
-        finally {
-            if(!getLock){
-                return;
-            }
-            log.info("===释放分布式锁:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
-            lock.unlock();
-        }
-    }
+//    @Scheduled(cron="0 */1 * * * ?")//每1分钟(每个1分钟的整数倍)
+//    public void closeOrderTaskV4() throws InterruptedException {
+//        RLock lock = redissonManager.getRedisson().getLock(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
+//        boolean getLock = false;
+//        try {
+//            if(getLock = lock.tryLock(0 ,50, TimeUnit.SECONDS)){//trylock增加锁
+//                log.info("===获取{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
+//                int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour","2"));
+////                iOrderService.closeOrder(hour);
+//            }else{
+//                log.info("===没有获得分布式锁:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
+//            }
+//        } catch (InterruptedException e) {
+//            log.error("Redisson分布式锁获取异常", e);
+//        }
+//        finally {
+//            if(!getLock){
+//                return;
+//            }
+//            log.info("===释放分布式锁:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
+//            lock.unlock();
+//        }
+//    }
 
     private void closeOrder(String lockName){
 //        expire命令用于给该锁设定一个过期时间，用于防止线程crash，导致锁一直有效，从而导致死锁。
         RedisShardedPoolUtil.expire(lockName,5);//有效期50秒,防死锁
         log.info("获取{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
         int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour","2"));
-//        iOrderService.closeOrder(hour);
+        iOrderService.closeOrder(hour);
         RedisShardedPoolUtil.del(lockName);//释放锁
         log.info("释放{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
         log.info("=============================");
